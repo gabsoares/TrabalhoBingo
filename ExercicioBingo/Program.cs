@@ -34,6 +34,7 @@ O jogo deve ser capaz de ser jogado por mais de 2 jogadores, onde o usuário inf
  */
 //Variaveis
 int linhaColuna = 5;
+int qtdJogadores = 0, qtdCartelas = 0;
 
 //Vetor que tem os numeros a sortear: de 1 ao 99
 int[] numerosASortear = new int[99];
@@ -41,11 +42,43 @@ int[] numerosASortear = new int[99];
 //Matriz
 int[,] cartela = new int[linhaColuna, linhaColuna];
 
+//Criando os numeros para sorteio
 for (int i = 0; i < numerosASortear.Length; i++)
 {
     numerosASortear[i] = i + 1;
 }
+//Funcao que retornara a quantidade de cartelas para cada jogador
+int PegarQuantidadeJogadores()
+{
+    Console.Write("Digite quantos jogadores o jogo terá: ");
+    qtdJogadores = int.Parse(Console.ReadLine());
 
+    return qtdJogadores;
+}
+//Funcao que retornara a quantidade de cartelas para cada jogador
+int PegarQuantidadeCartelas()
+{
+    Console.Write("Digite quantas cartelas cada jogador terá: ");
+    qtdCartelas = int.Parse(Console.ReadLine());
+
+    return qtdCartelas;
+}
+
+void TratativaNumJogadorCartela()
+{
+    do
+    {
+        Console.WriteLine("Mínimo de 2 jogadores");
+        PegarQuantidadeJogadores();
+    } while (qtdJogadores < 2);
+
+    do
+    {
+        Console.WriteLine("Mínimo de 1 cartela por jogador");
+        PegarQuantidadeCartelas();
+    } while (qtdCartelas < 1);
+}
+//Funcao para embaralhar o vetor
 void EmbaralharVetor(int[] vetorParaEmbaralhar)
 {
     Random rnd = new Random();
@@ -59,10 +92,9 @@ void EmbaralharVetor(int[] vetorParaEmbaralhar)
         vetorParaEmbaralhar[indexAleatorio] = aleatorio1;
     }
 }
-
-int[,] CriarCartela(string texto)
+//Funcao para criar cartela ja embaralhada
+int[,] CriarCartela()
 {
-    Console.WriteLine(texto);
     Console.WriteLine();
     int count = 0;
     int[] vet_temp = new int[linhaColuna * linhaColuna];
@@ -80,14 +112,27 @@ int[,] CriarCartela(string texto)
     return matriz;
 }
 
-EmbaralharVetor(numerosASortear);
-cartela = CriarCartela("Cartela");
-
-for (int i = 0; i < linhaColuna; i++)
+void ImprimirCartela(int[,] matriz, string mensagem)
 {
-    Console.WriteLine();
-    for (int j = 0; j < linhaColuna; j++)
+    Console.WriteLine(mensagem);
+    for (int i = 0; i < linhaColuna; i++)
     {
-        Console.Write($" {cartela[i, j]:00} ");
+        Console.WriteLine();
+        for (int j = 0; j < linhaColuna; j++)
+        {
+            Console.Write($" {matriz[i, j]:00} ");
+        }
     }
 }
+
+Console.WriteLine("------------JOGO DO BINGO------------");
+TratativaNumJogadorCartela();
+EmbaralharVetor(numerosASortear);
+cartela = CriarCartela();
+ImprimirCartela(cartela, "Cartela 1");
+EmbaralharVetor(numerosASortear);
+cartela = CriarCartela();
+ImprimirCartela(cartela, "\nCartela 2");
+EmbaralharVetor(numerosASortear);
+cartela = CriarCartela();
+ImprimirCartela(cartela, "\nCartela 3");
