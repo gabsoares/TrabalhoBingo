@@ -96,7 +96,7 @@ void EmbaralharVetor(int[] vetorParaEmbaralhar)
 int[,] CriarCartela()
 {
     Console.WriteLine();
-    int count = 0;
+    int contador = 0;
     int[] vet_temp = new int[linhaColuna * linhaColuna];
     int[,] matriz = new int[linhaColuna, linhaColuna];
     vet_temp = numerosASortear;
@@ -105,12 +105,17 @@ int[,] CriarCartela()
     {
         for (int j = 0; j < linhaColuna; j++)
         {
-            matriz[i, j] = vet_temp[count];
-            count++;
+            matriz[i, j] = vet_temp[contador];
+            contador++;
         }
     }
     return matriz;
 }
+
+//int[][,] CriarVetorCartela(int[][,] vetorCartela)
+//{
+
+//}
 
 void ImprimirCartela(int[,] matriz, string mensagem)
 {
@@ -133,6 +138,4 @@ ImprimirCartela(cartela, "Cartela 1");
 EmbaralharVetor(numerosASortear);
 cartela = CriarCartela();
 ImprimirCartela(cartela, "\nCartela 2");
-EmbaralharVetor(numerosASortear);
-cartela = CriarCartela();
-ImprimirCartela(cartela, "\nCartela 3");
+Console.WriteLine();
