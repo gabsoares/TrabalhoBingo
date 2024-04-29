@@ -33,11 +33,14 @@ Cada jogador pode ter mais de uma cartela.
 O jogo deve ser capaz de ser jogado por mais de 2 jogadores, onde o usuário informa no inicio do programa a quantidade de jogadores que ele deseja.
  */
 //Variaveis
+
 int linhaColuna = 5;
-int qtdJogadores = 0, qtdCartelas = 0;
+int qtdJogadores = 0, qtdCartelas = 0, numSorteado = 0;
+bool continuaSorteio = true;
+Random rdn = new Random();
 
 //Vetor que tem os numeros a sortear: de 1 ao 99
-int[] numerosASortear = new int[99];
+int[] numerosASortear = new int[99]; //Numeros aleatorios sem repetir para criar cartela
 
 //Matriz
 int[,] cartela = new int[linhaColuna, linhaColuna];
@@ -47,7 +50,19 @@ for (int i = 0; i < numerosASortear.Length; i++)
 {
     numerosASortear[i] = i + 1;
 }
+
+
+
+
 //Funcao que retornara a quantidade de cartelas para cada jogador
+int SortearNumero()
+{
+    for (int posicao = 0; posicao < numerosASortear.Length; posicao++)
+    {
+        numSorteado = numerosASortear[rdn.Next(1, 99)];
+    }
+    return numSorteado;
+}
 int PegarQuantidadeJogadores()
 {
     Console.Write("Digite quantos jogadores o jogo terá: ");
@@ -112,11 +127,6 @@ int[,] CriarCartela()
     return matriz;
 }
 
-//int[][,] CriarVetorCartela(int[][,] vetorCartela)
-//{
-
-//}
-
 void ImprimirCartela(int[,] matriz, string mensagem)
 {
     Console.WriteLine(mensagem);
@@ -131,11 +141,35 @@ void ImprimirCartela(int[,] matriz, string mensagem)
 }
 
 Console.WriteLine("------------JOGO DO BINGO------------");
-TratativaNumJogadorCartela();
-EmbaralharVetor(numerosASortear);
-cartela = CriarCartela();
-ImprimirCartela(cartela, "Cartela 1");
-EmbaralharVetor(numerosASortear);
-cartela = CriarCartela();
-ImprimirCartela(cartela, "\nCartela 2");
-Console.WriteLine();
+//EmbaralharVetor(numerosASortear);
+while (continuaSorteio)
+{
+    Console.WriteLine("Para sortear um número digite X: ");
+    char sorteaNumero = char.Parse(Console.ReadLine());
+    if (sorteaNumero == 'X' || sorteaNumero == 'x')
+    {
+        Console.WriteLine("Numero sorteado: " + SortearNumero());
+        for (int i = 0; i < numerosASortear.Length; i++)
+        {
+            //int[] numerosSorteados = new int[99];
+            //numerosSorteados[i] = SortearNumero();
+            int nSort = SortearNumero();
+            //Console.Write(numerosSorteados[i] + " ");
+            Console.Write(numerosASortear[i] + " ");
+            if (numerosASortear[i] == nSort)
+            {
+                numerosASortear[i] = 0;
+            }
+        }
+    }
+}
+
+//TratativaNumJogadorCartela();
+//Console.WriteLine();
+//EmbaralharVetor(numerosASortear);
+//cartela = CriarCartela();
+//ImprimirCartela(cartela, "Cartela 1");
+//EmbaralharVetor(numerosASortear);
+//cartela = CriarCartela();
+//ImprimirCartela(cartela, "\nCartela 2");
+//Console.WriteLine();
